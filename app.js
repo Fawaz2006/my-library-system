@@ -3,7 +3,7 @@
 // ==========================================================
 
 // !! CRITICAL FIX: Ensure this is 3000 to match server.js
-const BASE_URL = 'http://127.0.0.1:3000/api'; 
+const BASE_URL = 'https://my-library-system-k55w.onrender.com/api'; 
 
 // Form IDs
 const publisherForm = document.getElementById('publisherForm');

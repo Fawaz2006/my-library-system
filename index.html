@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Homepage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInDown 1.5s ease;
+    }
+
+/* Container spacing */
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 80px; /* added spacing from heading */
+}
+
+/* Member card */
+.member {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 60px 20px 20px; /* top padding increased to make space for image */
+  border-radius: 20px;
+  width: 180px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s, background 0.4s;
+  cursor: pointer;
+}
+
+/* Image wrapper to adjust position */
+/* Image wrapper to adjust position */
+.member-img-wrapper {
+  position: absolute;
+  top: -50px; /* pulls the image above the card */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* ensures wrapper is circular */
+  overflow: hidden; /* keeps the image inside the circle */
+  border: 4px solid #38bdf8; /* circular border for pop */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* optional shadow */
+}
+
+/* Member image */
+.member-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* covers circle without distortion */
+  display: block;
+}
+
+
+/* Member hover effect */
+.member:hover {
+  transform: translateY(-10px) scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Name & Role styling */
+.member h2 {
+  margin-top: 60px; /* space from image */
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+.member p {
+  margin-top: 5px;
+  font-size: 0.95rem;
+  color: #d1d5db;
+}
+
+
+    .button-container {
+      position: absolute;
+      bottom: 40px;
+      text-align: center;
+      animation: fadeInUp 2.4s ease;
+    }
+
+    .project-btn {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      background: #38bdf8;
+      border: none;
+      border-radius: 25px;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .project-btn:hover {
+      background: #0ea5e9;
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating animation elements */
+    .floating-circle {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      filter: blur(3px);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-40px); }
+    }
+      .vowel-card {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 350px;
+      height: 180px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 180px / 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+      animation: none !important;
+    }
+
+    .tabs-section {
+      display: flex;
+      gap: 185px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      animation: fadeInUp 2s ease;
+    }
+
+    .tab {
+      background: rgba(255,255,255,0.15);
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.25);
+      transition: 0.4s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .tab:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .tab h3 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .getcode-btn {
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      background: #38bdf8;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .getcode-btn:hover {
+      background: #0ea5e9;
+      transform: scale(1.07);
+    }
+
+    .tabs-section .tab:nth-child(odd) {
+      margin-top: -20px;
+    }
+
+    .tabs-section .tab:nth-child(even) {
+      margin-top: 20px;
+    }
+
+</style>
+</head>
+<body>
+  <div class="floating-circle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+  <div class="floating-circle" style="top: 70%; left: 70%; animation-delay: 2s;"></div>
+  <div class="floating-circle" style="top: 40%; left: 80%; animation-delay: 1s;"></div>
+
+  <h1 style="margin-top:200px;">Meet Our Team</h1>
+<div class="team-container">
+  <div class="member">
+    <div class="member-img-wrapper">
+      <img src="developer.JPG" alt="Fawaz Profile" class="member-img">
+    </div>
+    <h2>Fawaz</h2>
+    <p>Web Developer</p>
+  </div>
+  <div class="member">
+    <div class="member-img-wrapper">
+      <img src="Entrepreneur.png" alt="Sakith Profile" class="member-img">
+    </div>
+    <h2>Saketh</h2>
+    <p>Entrepreneur</p>
+  </div>
+  <div class="member">
+    <div class="member-img-wrapper">
+      <img src="sabeel.png" alt="Sabeel Profile" class="member-img">
+    </div>
+    <h2>Sabeel</h2>
+    <p>Quality Checker</p>
+  </div>
+  <div class="member">
+    <div class="member-img-wrapper">
+      <img src="sai.png" alt="Sai ram Profile" class="member-img">
+    </div>
+    <h2>Sai Ram</h2>
+    <p>Data Analyst</p>
+  </div>
+</div>
+
+
+  <div class="tabs-section">
+    <div class="tab">
+      <h3>Home Page</h3>
+      <button class="getcode-btn" onclick="location.href='home.html'">Get Code</button>
+    </div>
+    <div class="tab">
+      <h3>LMS</h3>
+      <button class="getcode-btn" onclick="location.href='lms_code.html'">Get Code</button>
+    </div>
+    <div class="tab">
+      <h3>JAVA SCRIPT</h3>
+      <button class="getcode-btn" onclick="location.href='javascript.html'">Get Code</button>
+    </div>
+    <div class="tab">
+      <h3>CONNECT SERVER</h3>
+      <button class="getcode-btn" onclick="location.href='connect.html'">Get Code</button>
+    </div>
+  </div>
+
+  <div class="button-container"">
+    <button class="project-btn" onclick="location.href='test.html'">Go to Project</button>
+  </div>
+  <div class="vowel-card">Library Management System</div>
+</body>
+</html>

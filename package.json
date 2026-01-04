@@ -1,0 +1,23 @@
+{
+  "name": "library_db",
+  "version": "1.0.0",
+  "description": "Node.js and MySQL CRUD application for Library Management.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mysql"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": {},
+  "type": "commonjs"
+}

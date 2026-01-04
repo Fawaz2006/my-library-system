@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Note: Team Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        .note-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .button-group button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .download-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+        /* Style for the TEXTAREA to look like a code block */
+        #code-display {
+            width: 100%;
+            height: 740px; /* Fixed height for scrollability */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+            resize: none; /* Prevent manual resizing */
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="note-container">
+    <div class="header">
+        <h2>📝 Team Homepage HTML Code (Escaped)</h2>
+        <div class="button-group">
+            <button class="copy-btn" id="copyButton">📋 Copy Code</button>
+            <button class="download-btn" id="downloadButton">⬇️ Download HTML</button>
+        </div>
+    </div>
+
+    <textarea id="code-display" readonly>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Team Homepage&lt;/title&gt;
+  &lt;style&gt;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInDown 1.5s ease;
+    }
+
+    .team-container {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 60px;
+      animation: fadeInUp 2s ease;
+    }
+
+    .member {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+      transition: transform 0.4s ease, background 0.4s ease;
+      cursor: pointer;
+    }
+
+    .member:hover {
+      transform: translateY(-10px) scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .member h2 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .member p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .button-container {
+      position: absolute;
+      bottom: 40px;
+      text-align: center;
+      animation: fadeInUp 2.4s ease;
+    }
+
+    .project-btn {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      background: #38bdf8;
+      border: none;
+      border-radius: 25px;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .project-btn:hover {
+      background: #0ea5e9;
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating animation elements */
+    .floating-circle {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      filter: blur(3px);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-40px); }
+    }
+      .vowel-card {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 350px;
+      height: 180px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 180px / 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+      animation: none !important;
+    }
+
+    .tabs-section {
+      display: flex;
+      gap: 185px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      animation: fadeInUp 2s ease;
+    }
+
+    .tab {
+      background: rgba(255,255,255,0.15);
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.25);
+      transition: 0.4s ease;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .tab:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .tab h3 {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .getcode-btn {
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      background: #38bdf8;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .getcode-btn:hover {
+      background: #0ea5e9;
+      transform: scale(1.07);
+    }
+
+    .tabs-section .tab:nth-child(odd) {
+      margin-top: -20px;
+    }
+
+    .tabs-section .tab:nth-child(even) {
+      margin-top: 20px;
+    }
+
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="floating-circle" style="top: 10%; left: 15%; animation-delay: 0s;"&gt;&lt;/div&gt;
+  &lt;div class="floating-circle" style="top: 70%; left: 70%; animation-delay: 2s;"&gt;&lt;/div&gt;
+  &lt;div class="floating-circle" style="top: 40%; left: 80%; animation-delay: 1s;"&gt;&lt;/div&gt;
+
+  &lt;h1 style="margin-top:140px;"&gt;Meet Our Team&lt;/h1&gt;
+  &lt;div class="team-container"&gt;
+    &lt;div class="member"&gt;
+      &lt;h2&gt;Member 1&lt;/h2&gt;
+      &lt;p&gt;Role Description&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="member"&gt;
+      &lt;h2&gt;Member 2&lt;/h2&gt;
+      &lt;p&gt;Role Description&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="member"&gt;
+      &lt;h2&gt;Member 3&lt;/h2&gt;
+      &lt;p&gt;Role Description&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="member"&gt;
+      &lt;h2&gt;Member 4&lt;/h2&gt;
+      &lt;p&gt;Role Description&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="tabs-section"&gt;
+    &lt;div class="tab"&gt;
+      &lt;h3&gt;Home Page&lt;/h3&gt;
+      &lt;button class="getcode-btn" onclick="location.href='home.html'"&gt;Get Code&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="tab"&gt;
+      &lt;h3&gt;LMS&lt;/h3&gt;
+      &lt;button class="getcode-btn" onclick="location.href='lms_code.html'"&gt;Get Code&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="tab"&gt;
+      &lt;h3&gt;JAVA SCRIPT&lt;/h3&gt;
+      &lt;button class="getcode-btn" onclick="location.href='javascript.html'"&gt;Get Code&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="tab"&gt;
+      &lt;h3&gt;CONNECT SERVER&lt;/h3&gt;
+      &lt;button class="getcode-btn" onclick="location.href='connect.html'"&gt;Get Code&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="button-container""&gt;
+    &lt;button class="project-btn" onclick="location.href='test.html'"&gt;Go to Project&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="vowel-card"&gt;Library Management System&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+    </textarea>
+</div>
+
+<script>
+    const codeDisplay = document.getElementById('code-display');
+    const copyButton = document.getElementById('copyButton');
+    const downloadButton = document.getElementById('downloadButton');
+
+    // **1. Copy Code Functionality**
+    copyButton.addEventListener('click', () => {
+        // Select the content of the textarea
+        codeDisplay.select(); 
+        codeDisplay.setSelectionRange(0, 99999); // For mobile devices
+
+        // Use the modern Clipboard API (preferred)
+        navigator.clipboard.writeText(codeDisplay.value).then(() => {
+            copyButton.textContent = '✅ Copied!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+            copyButton.textContent = '❌ Failed!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        });
+    });
+
+    // **2. Download HTML Functionality**
+    downloadButton.addEventListener('click', () => {
+        // Get the code content from the textarea's value
+        const codeContent = codeDisplay.value;
+        
+        // Un-escape the HTML entities before saving the file
+        const unescapedContent = codeContent.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
+        // Create a Blob from the content with the HTML file type
+        const blob = new Blob([unescapedContent], { type: 'text/html' });
+        
+        // Create a temporary link element
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        
+        // Set the link attributes for download
+        a.href = url;
+        a.download = 'team_homepage.html'; // Suggested filename for the user
+        
+        // Programmatically click the link to trigger the download
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up the temporary link and object URL
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        downloadButton.textContent = '⬇️ Downloading...';
+        setTimeout(() => {
+            downloadButton.textContent = '⬇️ Download HTML';
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

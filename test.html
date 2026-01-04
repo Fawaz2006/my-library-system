@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Library Management System</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <h2>📚 LMS</h2>
+        <button class="nav-btn active" onclick="showSection('dashboard')">📊 Dashboard</button>
+        <button class="nav-btn" onclick="showSection('publishers')">🏢 Publishers</button>
+        <button class="nav-btn" onclick="showSection('books')">📖 Books</button>
+        <button class="nav-btn" onclick="showSection('branches')">🏛️ Branches</button>
+        <button class="nav-btn" onclick="showSection('bookCopies')">📑 Book Copies</button>
+        <button class="nav-btn" onclick="showSection('cards')">💳 Library Cards</button>
+        <button class="nav-btn" onclick="showSection('lendings')">🔄 Book Lendings</button>
+        <button class="nav-btn" onclick="showSection('sqlQueries')">🔍 SQL Queries</button>
+
+    </div>
+
+    <div class="content">
+        <h1>Library Management System</h1>
+
+        <div id="dashboard" class="section active">
+            <h2>Dashboard Overview</h2>
+            <div id="statsGrid">
+            </div>
+
+            <h3>Recent Book Lendings</h3>
+            <table id="recentLendings">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Branch</th>
+                        <th>Card No</th>
+                        <th>Date Out</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="publishers" class="section">
+            <h2>Manage Publishers</h2>
+            <form id="publisherForm">
+                <h3>Add Publisher</h3>
+                <div class="form-group">
+                    <label for="publisherName">Name:</label>
+                    <input type="text" id="publisherName" required>
+                </div>
+                <div class="form-group">
+                    <label for="publisherPhone">Phone:</label>
+                    <input type="text" id="publisherPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="publisherAddress">Address:</label>
+                    <input type="text" id="publisherAddress" required>
+                </div>
+                <button type="submit">Add Publisher</button>
+            </form>
+
+            <h3>Current Publishers</h3>
+            <table id="publishersTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="books" class="section">
+            <h2>Manage Books</h2>
+            <form id="bookForm">
+                <h3>Add Book</h3>
+                <div class="form-group">
+                    <label for="bookId">Book ID:</label>
+                    <input type="text" id="bookId" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookTitle">Title:</label>
+                    <input type="text" id="bookTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="pubYear">Publication Year:</label>
+                    <input type="number" id="pubYear" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookPublisher">Publisher Name:</label>
+                    <input type="text" id="bookPublisher" placeholder="Enter Publisher Name" required>
+                </div>
+                <button type="submit">Add Book</button>
+            </form>
+
+            <form id="authorForm" style="margin-top: 20px;">
+                <h3>Add Author to Book</h3>
+                <div class="form-group">
+                    <label for="authorBookId">Book ID:</label>
+                    <input type="text" id="authorBookId" placeholder="Enter Book ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="authorName">Author Name:</label>
+                    <input type="text" id="authorName" required>
+                </div>
+                <button type="submit">Add Author</button>
+            </form>
+
+            <h3>Current Books</h3>
+            <table id="booksTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Publisher</th>
+                        <th>Authors</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="branches" class="section">
+            <h2>Manage Library Branches</h2>
+            <form id="branchForm">
+                <h3>Add Branch</h3>
+                <div class="form-group">
+                    <label for="branchId">Branch ID:</label>
+                    <input type="text" id="branchId" required>
+                </div>
+                <div class="form-group">
+                    <label for="branchName">Branch Name:</label>
+                    <input type="text" id="branchName" required>
+                </div>
+                <div class="form-group">
+                    <label for="branchAddress">Address:</label>
+                    <input type="text" id="branchAddress" required>
+                </div>
+                <button type="submit">Add Branch</button>
+            </form>
+
+            <h3>Current Branches</h3>
+            <table id="branchesTable">
+                <thead>
+                    <tr>
+                        <th>Branch ID</th>
+                        <th>Branch Name</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="bookCopies" class="section">
+            <h2>Manage Book Copies</h2>
+            <form id="copiesForm">
+                <h3>Add Book Copies</h3>
+                <div class="form-group">
+                    <label for="copyBookId">Book ID:</label>
+                    <input type="text" id="copyBookId" placeholder="Enter Book ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="copyBranchId">Branch ID:</label>
+                    <input type="text" id="copyBranchId" placeholder="Enter Branch ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="copyCount">Number of Copies:</label>
+                    <input type="number" id="copyCount" required>
+                </div>
+                <button type="submit">Add Copies</button>
+            </form>
+
+            <h3>Current Book Copies</h3>
+            <table id="copiesTable">
+                <thead>
+                    <tr>
+                        <th>Copies</th>
+                        <th>Book Title</th>
+                        <th>Branch Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="cards" class="section">
+            <h2>Manage Library Cards</h2>
+            <form id="cardForm">
+                <h3>Create New Card</h3>
+                <div class="form-group">
+                    <label for="cardNo">Card Number:</label>
+                    <input type="text" id="cardNo" required>
+                </div>
+                <button type="submit">Create Card</button>
+            </form>
+
+            <h3>Current Cards</h3>
+            <table id="cardsTable">
+                <thead>
+                    <tr>
+                        <th>Card No</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="lendings" class="section">
+            <h2>Manage Book Lendings</h2>
+            <form id="lendingForm">
+                <h3>Record Book Lending</h3>
+                <div class="form-group">
+                    <label for="lendingBookId">Book ID:</label>
+                    <input type="text" id="lendingBookId" placeholder="Enter Book ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="lendingBranchId">Branch ID:</label>
+                    <input type="text" id="lendingBranchId" placeholder="Enter Branch ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="lendingCardNo">Card Number:</label>
+                    <input type="text" id="lendingCardNo" placeholder="Enter Card Number" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateOut">Date Out (YYYY-MM-DD):</label>
+                    <input type="date" id="dateOut" required>
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">Due Date (YYYY-MM-DD):</label>
+                    <input type="date" id="dueDate" required>
+                </div>
+                <button type="submit">Record Lending</button>
+            </form>
+
+            <h3>Current Book Lendings</h3>
+            <table id="lendingsTable">
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Branch</th>
+                        <th>Card No</th>
+                        <th>Date Out</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div id="sqlQueries" class="section">
+            <h2>🔍 SQL Queries Used in the Project</h2>
+            <p>This section lists the Data Definition Language (DDL) for creating the schema.</p>
+
+            <hr>
+
+            <h3>1. Database Schema (DDL)</h3>
+            <pre style="background-color: #eee; padding: 15px; border-radius: 5px; overflow-x: auto;">
+-- Create the database
+CREATE DATABASE IF NOT EXISTS library_db;
+USE library_db;
+
+-- 1. PUBLISHER Table
+CREATE TABLE IF NOT EXISTS PUBLISHER (
+    NAME VARCHAR(100) NOT NULL PRIMARY KEY,
+    PHONE VARCHAR(20),
+    ADDRESS VARCHAR(255)
+);
+
+-- 2. LIBRARY_BRANCH Table
+CREATE TABLE IF NOT EXISTS LIBRARY_BRANCH (
+    BRANCH_ID INT NOT NULL PRIMARY KEY,
+    BRANCH_NAME VARCHAR(100) NOT NULL,
+    ADDRESS VARCHAR(255)
+);
+
+-- 3. CARD Table (The Borrower entity)
+CREATE TABLE IF NOT EXISTS CARD (
+    CARD_NO INT NOT NULL PRIMARY KEY
+);
+
+-- 4. BOOK Table (References PUBLISHER)
+CREATE TABLE IF NOT EXISTS BOOK (
+    BOOK_ID INT NOT NULL PRIMARY KEY,
+    TITLE VARCHAR(255) NOT NULL,
+    PUB_YEAR INT,
+    PUBLISHER_NAME VARCHAR(100),
+    FOREIGN KEY (PUBLISHER_NAME) REFERENCES PUBLISHER(NAME)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 5. BOOK_AUTHOR Table (Many-to-Many link between Author and Book)
+CREATE TABLE IF NOT EXISTS BOOK_AUTHOR (
+    AUTHOR_NAME VARCHAR(100) NOT NULL,
+    BOOK_ID INT NOT NULL,
+    PRIMARY KEY (AUTHOR_NAME, BOOK_ID),
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 6. BOOK_COPIES Table (Many-to-Many link for Inventory/Stock)
+CREATE TABLE IF NOT EXISTS BOOK_COPIES (
+    NO_OF_COPIES INT NOT NULL DEFAULT 0,
+    BOOK_ID INT NOT NULL,
+    BRANCH_ID INT NOT NULL,
+    PRIMARY KEY (BOOK_ID, BRANCH_ID),
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (BRANCH_ID) REFERENCES LIBRARY_BRANCH(BRANCH_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 7. BOOK_LENDING Table (Transaction table, links Book, Branch, and Card)
+CREATE TABLE IF NOT EXISTS BOOK_LENDING (
+    DATE_OUT DATE NOT NULL,
+    DUE_DATE DATE NOT NULL,
+    BOOK_ID INT NOT NULL,
+    BRANCH_ID INT NOT NULL,
+    CARD_NO INT NOT NULL,
+    PRIMARY KEY (BOOK_ID, BRANCH_ID, CARD_NO), 
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (BRANCH_ID) REFERENCES LIBRARY_BRANCH(BRANCH_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (CARD_NO) REFERENCES CARD(CARD_NO)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);</pre>
+
+        </div>
+
+
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

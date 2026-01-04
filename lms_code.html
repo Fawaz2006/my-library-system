@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Notes for LMS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        .note-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .button-group button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .download-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+        /* Style for the TEXTAREA to look like a code block */
+        #code-display {
+            width: 100%;
+            height: 740px; /* Fixed height for scrollability */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+            resize: none; /* Prevent manual resizing */
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="note-container">
+    <div class="header">
+        <h2>📝 Library Management System HTML Structure</h2>
+        <div class="button-group">
+            <button class="copy-btn" id="copyButton">📋 Copy Code</button>
+            <button class="download-btn" id="downloadButton">⬇️ Download HTML</button>
+        </div>
+    </div>
+
+    <textarea id="code-display" readonly>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+    &lt;title&gt;Library Management System&lt;/title&gt;
+    &lt;style&gt;
+
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+    &lt;div class="sidebar"&gt;
+        &lt;h2&gt;📚 LMS&lt;/h2&gt;
+        &lt;button class="nav-btn active" onclick="showSection('dashboard')"&gt;📊 Dashboard&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('publishers')"&gt;🏢 Publishers&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('books')"&gt;📖 Books&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('branches')"&gt;🏛️ Branches&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('bookCopies')"&gt;📑 Book Copies&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('cards')"&gt;💳 Library Cards&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('lendings')"&gt;🔄 Book Lendings&lt;/button&gt;
+        &lt;button class="nav-btn" onclick="showSection('sqlQueries')"&gt;🔍 SQL Queries&lt;/button&gt;
+
+    &lt;/div&gt;
+
+    &lt;div class="content"&gt;
+        &lt;h1&gt;Library Management System&lt;/h1&gt;
+
+        &lt;div id="dashboard" class="section active"&gt;
+            &lt;h2&gt;Dashboard Overview&lt;/h2&gt;
+            &lt;div id="statsGrid"&gt;
+            &lt;/div&gt;
+
+            &lt;h3&gt;Recent Book Lendings&lt;/h3&gt;
+            &lt;table id="recentLendings"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Book Title&lt;/th&gt;
+                        &lt;th&gt;Branch&lt;/th&gt;
+                        &lt;th&gt;Card No&lt;/th&gt;
+                        &lt;th&gt;Date Out&lt;/th&gt;
+                        &lt;th&gt;Due Date&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="publishers" class="section"&gt;
+            &lt;h2&gt;Manage Publishers&lt;/h2&gt;
+            &lt;form id="publisherForm"&gt;
+                &lt;h3&gt;Add Publisher&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="publisherName"&gt;Name:&lt;/label&gt;
+                    &lt;input type="text" id="publisherName" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="publisherPhone"&gt;Phone:&lt;/label&gt;
+                    &lt;input type="text" id="publisherPhone" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="publisherAddress"&gt;Address:&lt;/label&gt;
+                    &lt;input type="text" id="publisherAddress" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Add Publisher&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Publishers&lt;/h3&gt;
+            &lt;table id="publishersTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Name&lt;/th&gt;
+                        &lt;th&gt;Phone&lt;/th&gt;
+                        &lt;th&gt;Address&lt;/th&gt;
+                        &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="books" class="section"&gt;
+            &lt;h2&gt;Manage Books&lt;/h2&gt;
+            &lt;form id="bookForm"&gt;
+                &lt;h3&gt;Add Book&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="bookId"&gt;Book ID:&lt;/label&gt;
+                    &lt;input type="text" id="bookId" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="bookTitle"&gt;Title:&lt;/label&gt;
+                    &lt;input type="text" id="bookTitle" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="pubYear"&gt;Publication Year:&lt;/label&gt;
+                    &lt;input type="number" id="pubYear" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="bookPublisher"&gt;Publisher Name:&lt;/label&gt;
+                    &lt;input type="text" id="bookPublisher" placeholder="Enter Publisher Name" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Add Book&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;form id="authorForm" style="margin-top: 20px;"&gt;
+                &lt;h3&gt;Add Author to Book&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="authorBookId"&gt;Book ID:&lt;/label&gt;
+                    &lt;input type="text" id="authorBookId" placeholder="Enter Book ID" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="authorName"&gt;Author Name:&lt;/label&gt;
+                    &lt;input type="text" id="authorName" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Add Author&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Books&lt;/h3&gt;
+            &lt;table id="booksTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;ID&lt;/th&gt;
+                        &lt;th&gt;Title&lt;/th&gt;
+                        &lt;th&gt;Year&lt;/th&gt;
+                        &lt;th&gt;Publisher&lt;/th&gt;
+                        &lt;th&gt;Authors&lt;/th&gt;
+                        &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="branches" class="section"&gt;
+            &lt;h2&gt;Manage Library Branches&lt;/h2&gt;
+            &lt;form id="branchForm"&gt;
+                &lt;h3&gt;Add Branch&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="branchId"&gt;Branch ID:&lt;/label&gt;
+                    &lt;input type="text" id="branchId" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="branchName"&gt;Branch Name:&lt;/label&gt;
+                    &lt;input type="text" id="branchName" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="branchAddress"&gt;Address:&lt;/label&gt;
+                    &lt;input type="text" id="branchAddress" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Add Branch&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Branches&lt;/h3&gt;
+            &lt;table id="branchesTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Branch ID&lt;/th&gt;
+                        &lt;th&gt;Branch Name&lt;/th&gt;
+                        &lt;th&gt;Address&lt;/th&gt;
+                        &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="bookCopies" class="section"&gt;
+            &lt;h2&gt;Manage Book Copies&lt;/h2&gt;
+            &lt;form id="copiesForm"&gt;
+                &lt;h3&gt;Add Book Copies&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="copyBookId"&gt;Book ID:&lt;/label&gt;
+                    &lt;input type="text" id="copyBookId" placeholder="Enter Book ID" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="copyBranchId"&gt;Branch ID:&lt;/label&gt;
+                    &lt;input type="text" id="copyBranchId" placeholder="Enter Branch ID" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="copyCount"&gt;Number of Copies:&lt;/label&gt;
+                    &lt;input type="number" id="copyCount" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Add Copies&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Book Copies&lt;/h3&gt;
+            &lt;table id="copiesTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Copies&lt;/th&gt;
+                        &lt;th&gt;Book Title&lt;/th&gt;
+                        &lt;th&gt;Branch Name&lt;/th&gt;
+                        &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="cards" class="section"&gt;
+            &lt;h2&gt;Manage Library Cards&lt;/h2&gt;
+            &lt;form id="cardForm"&gt;
+                &lt;h3&gt;Create New Card&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="cardNo"&gt;Card Number:&lt;/label&gt;
+                    &lt;input type="text" id="cardNo" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Create Card&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Cards&lt;/h3&gt;
+            &lt;table id="cardsTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Card No&lt;/th&gt;
+                        &lt;th&gt;Actions&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div id="lendings" class="section"&gt;
+            &lt;h2&gt;Manage Book Lendings&lt;/h2&gt;
+            &lt;form id="lendingForm"&gt;
+                &lt;h3&gt;Record Book Lending&lt;/h3&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="lendingBookId"&gt;Book ID:&lt;/label&gt;
+                    &lt;input type="text" id="lendingBookId" placeholder="Enter Book ID" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="lendingBranchId"&gt;Branch ID:&lt;/label&gt;
+                    &lt;input type="text" id="lendingBranchId" placeholder="Enter Branch ID" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="lendingCardNo"&gt;Card Number:&lt;/label&gt;
+                    &lt;input type="text" id="lendingCardNo" placeholder="Enter Card Number" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="dateOut"&gt;Date Out (YYYY-MM-DD):&lt;/label&gt;
+                    &lt;input type="date" id="dateOut" required&gt;
+                &lt;/div&gt;
+                &lt;div class="form-group"&gt;
+                    &lt;label for="dueDate"&gt;Due Date (YYYY-MM-DD):&lt;/label&gt;
+                    &lt;input type="date" id="dueDate" required&gt;
+                &lt;/div&gt;
+                &lt;button type="submit"&gt;Record Lending&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;h3&gt;Current Book Lendings&lt;/h3&gt;
+            &lt;table id="lendingsTable"&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;Book Title&lt;/th&gt;
+                        &lt;th&gt;Branch&lt;/th&gt;
+                        &lt;th&gt;Card No&lt;/th&gt;
+                        &lt;th&gt;Date Out&lt;/th&gt;
+                        &lt;th&gt;Due Date&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+
+        &lt;div id="sqlQueries" class="section"&gt;
+            &lt;h2&gt;🔍 SQL Queries Used in the Project&lt;/h2&gt;
+            &lt;p&gt;This section lists the Data Definition Language (DDL) for creating the schema.&lt;/p&gt;
+
+            &lt;hr&gt;
+
+            &lt;h3&gt;1. Database Schema (DDL)&lt;/h3&gt;
+            &lt;pre style="background-color: #eee; padding: 15px; border-radius: 5px; overflow-x: auto;"&gt;
+-- Create the database
+CREATE DATABASE IF NOT EXISTS library_db;
+USE library_db;
+
+-- 1. PUBLISHER Table
+CREATE TABLE IF NOT EXISTS PUBLISHER (
+    NAME VARCHAR(100) NOT NULL PRIMARY KEY,
+    PHONE VARCHAR(20),
+    ADDRESS VARCHAR(255)
+);
+
+-- 2. LIBRARY_BRANCH Table
+CREATE TABLE IF NOT EXISTS LIBRARY_BRANCH (
+    BRANCH_ID INT NOT NULL PRIMARY KEY,
+    BRANCH_NAME VARCHAR(100) NOT NULL,
+    ADDRESS VARCHAR(255)
+);
+
+-- 3. CARD Table (The Borrower entity)
+CREATE TABLE IF NOT EXISTS CARD (
+    CARD_NO INT NOT NULL PRIMARY KEY
+);
+
+-- 4. BOOK Table (References PUBLISHER)
+CREATE TABLE IF NOT EXISTS BOOK (
+    BOOK_ID INT NOT NULL PRIMARY KEY,
+    TITLE VARCHAR(255) NOT NULL,
+    PUB_YEAR INT,
+    PUBLISHER_NAME VARCHAR(100),
+    FOREIGN KEY (PUBLISHER_NAME) REFERENCES PUBLISHER(NAME)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 5. BOOK_AUTHOR Table (Many-to-Many link between Author and Book)
+CREATE TABLE IF NOT EXISTS BOOK_AUTHOR (
+    AUTHOR_NAME VARCHAR(100) NOT NULL,
+    BOOK_ID INT NOT NULL,
+    PRIMARY KEY (AUTHOR_NAME, BOOK_ID),
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 6. BOOK_COPIES Table (Many-to-Many link for Inventory/Stock)
+CREATE TABLE IF NOT EXISTS BOOK_COPIES (
+    NO_OF_COPIES INT NOT NULL DEFAULT 0,
+    BOOK_ID INT NOT NULL,
+    BRANCH_ID INT NOT NULL,
+    PRIMARY KEY (BOOK_ID, BRANCH_ID),
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (BRANCH_ID) REFERENCES LIBRARY_BRANCH(BRANCH_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+-- 7. BOOK_LENDING Table (Transaction table, links Book, Branch, and Card)
+CREATE TABLE IF NOT EXISTS BOOK_LENDING (
+    DATE_OUT DATE NOT NULL,
+    DUE_DATE DATE NOT NULL,
+    BOOK_ID INT NOT NULL,
+    BRANCH_ID INT NOT NULL,
+    CARD_NO INT NOT NULL,
+    PRIMARY KEY (BOOK_ID, BRANCH_ID, CARD_NO), 
+    FOREIGN KEY (BOOK_ID) REFERENCES BOOK(BOOK_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (BRANCH_ID) REFERENCES LIBRARY_BRANCH(BRANCH_ID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (CARD_NO) REFERENCES CARD(CARD_NO)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);&lt;/pre&gt;
+
+        &lt;/div&gt;
+
+
+
+    &lt;/div&gt;
+
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+    </textarea>
+</div>
+
+<script>
+    const codeDisplay = document.getElementById('code-display');
+    const copyButton = document.getElementById('copyButton');
+    const downloadButton = document.getElementById('downloadButton');
+
+    // **1. Copy Code Functionality**
+    copyButton.addEventListener('click', () => {
+        // Select the content of the textarea
+        codeDisplay.select(); 
+        codeDisplay.setSelectionRange(0, 99999); // For mobile devices
+
+        // Use the modern Clipboard API (preferred)
+        navigator.clipboard.writeText(codeDisplay.value).then(() => {
+            copyButton.textContent = '✅ Copied!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+            copyButton.textContent = '❌ Failed!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        });
+    });
+
+    // **2. Download HTML Functionality**
+    downloadButton.addEventListener('click', () => {
+        // Get the code content from the textarea's value
+        const codeContent = codeDisplay.value;
+        
+        // Un-escape the HTML entities before saving the file
+        const unescapedContent = codeContent.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
+        // Create a Blob from the content with the HTML file type
+        const blob = new Blob([unescapedContent], { type: 'text/html' });
+        
+        // Create a temporary link element
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        
+        // Set the link attributes for download
+        a.href = url;
+        a.download = 'lms_interface.html'; // Suggested filename for the user
+        
+        // Programmatically click the link to trigger the download
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up the temporary link and object URL
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        downloadButton.textContent = '⬇️ Downloading...';
+        setTimeout(() => {
+            downloadButton.textContent = '⬇️ Download HTML';
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>

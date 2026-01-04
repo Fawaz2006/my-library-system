@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Notes for LMS Server.js</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f7f9;
+        }
+        .note-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .header h2 {
+            margin: 0;
+            color: #333;
+        }
+        .button-group button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .download-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+        /* Style for the TEXTAREA to look like a code block */
+        #code-display {
+            width: 100%;
+            height: 740px; /* Fixed height for scrollability */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+            resize: none; /* Prevent manual resizing */
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="note-container">
+    <div class="header">
+        <h2>📝 Library Management System Node.js Server (server.js)</h2>
+        <div class="button-group">
+            <button class="copy-btn" id="copyButton">📋 Copy Code</button>
+            <button class="download-btn" id="downloadButton">⬇️ Download server.js</button>
+        </div>
+    </div>
+
+    <textarea id="code-display" readonly>const express = require('express');
+const mysql = require('mysql2');
+const cors = require('cors');
+
+const app = express();
+const PORT = 3000;
+
+// --- DATABASE CONNECTION CONFIGURATION ---
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    // !! IMPORTANT: Verify your actual password here.
+    password: 'pasword ', 
+    database: 'library_db' 
+});
+const db = pool.promise();
+
+db.getConnection()
+    .then(() => console.log('✅ Connected to MySQL Database.'))
+    .catch(err => {
+        console.error('❌ Error connecting to MySQL:', err.message);
+        process.exit(1);
+    });
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Helper function to handle database queries
+async function safeQuery(sql, params, req, res) {
+    try {
+        const [results] = await db.query(sql, params);
+        if (req.method === 'GET') {
+            res.status(200).json(results);
+        } else if (req.method === 'DELETE') {
+            if (results.affectedRows === 0) {
+                 // Send 404 if the record wasn't found
+                 return res.status(404).json({ message: 'Record not found for deletion.' });
+            }
+            res.status(200).json({ message: 'Operation successful (Deleted).' });
+        } else {
+            // For POST/INSERT
+            res.status(201).json({ message: 'Operation successful.', insertId: results.insertId });
+        }
+    } catch (err) {
+        console.error(`❌ Query Error (${req.method} ${req.path}):`, err.message, err.sqlMessage);
+        res.status(500).json({ 
+            message: `Failed to execute database operation for ${req.path}.`, 
+            sqlMessage: err.sqlMessage || err.message 
+        });
+    }
+}
+
+// ==========================================================
+// API ROUTES 
+// ==========================================================
+
+// --- 1. PUBLISHER ROUTES ---
+app.get('/api/publishers', async (req, res) => {
+    await safeQuery('SELECT NAME, PHONE, ADDRESS FROM PUBLISHER', [], req, res);
+});
+app.post('/api/publishers', async (req, res) => {
+    const { name, phone, address } = req.body;
+    await safeQuery('INSERT INTO PUBLISHER (NAME, PHONE, ADDRESS) VALUES (?, ?, ?)', [name, phone, address], req, res);
+});
+app.delete('/api/publishers/:name', async (req, res) => {
+    const { name } = req.params;
+    await safeQuery('DELETE FROM PUBLISHER WHERE NAME = ?', [name], req, res);
+});
+
+
+// --- 2. BOOK ROUTES (FIXED GROUP BY) ---
+app.get('/api/books', async (req, res) => {
+    const sql = `
+        SELECT 
+            B.BOOK_ID, B.TITLE, B.PUB_YEAR, B.PUBLISHER_NAME,
+            GROUP_CONCAT(A.AUTHOR_NAME SEPARATOR ', ') AS Authors
+        FROM BOOK B
+        LEFT JOIN BOOK_AUTHOR A ON B.BOOK_ID = A.BOOK_ID
+        GROUP BY B.BOOK_ID, B.TITLE, B.PUB_YEAR, B.PUBLISHER_NAME; 
+    `;
+    await safeQuery(sql, [], req, res);
+});
+app.post('/api/books', async (req, res) => {
+    const { bookId, title, pubYear, publisherName } = req.body;
+    await safeQuery('INSERT INTO BOOK (BOOK_ID, TITLE, PUB_YEAR, PUBLISHER_NAME) VALUES (?, ?, ?, ?)', [bookId, title, pubYear, publisherName], req, res);
+});
+app.delete('/api/books/:bookId', async (req, res) => {
+    const { bookId } = req.params;
+    await safeQuery('DELETE FROM BOOK WHERE BOOK_ID = ?', [bookId], req, res);
+});
+
+// --- 2b. BOOK_AUTHOR POST ---
+app.post('/api/authors', async (req, res) => {
+    const { authorName, bookId } = req.body;
+    await safeQuery('INSERT INTO BOOK_AUTHOR (AUTHOR_NAME, BOOK_ID) VALUES (?, ?)', [authorName, bookId], req, res);
+});
+
+
+// --- 3. BRANCH ROUTES ---
+app.get('/api/branches', async (req, res) => {
+    await safeQuery('SELECT BRANCH_ID, BRANCH_NAME, ADDRESS FROM LIBRARY_BRANCH', [], req, res);
+});
+app.post('/api/branches', async (req, res) => {
+    const { branchId, branchName, branchAddress } = req.body;
+    await safeQuery('INSERT INTO LIBRARY_BRANCH (BRANCH_ID, BRANCH_NAME, ADDRESS) VALUES (?, ?, ?)', [branchId, branchName, branchAddress], req, res);
+});
+app.delete('/api/branches/:branchId', async (req, res) => {
+    const { branchId } = req.params;
+    await safeQuery('DELETE FROM LIBRARY_BRANCH WHERE BRANCH_ID = ?', [branchId], req, res);
+});
+
+
+// --- 4. BOOK COPIES ROUTES (Includes IDs for Composite Delete) ---
+app.get('/api/book_copies', async (req, res) => {
+    const sql = `
+        SELECT C.NO_OF_COPIES, B.TITLE AS BookTitle, L.BRANCH_NAME AS BranchName,
+               C.BOOK_ID, C.BRANCH_ID 
+        FROM BOOK_COPIES C
+        JOIN BOOK B ON C.BOOK_ID = B.BOOK_ID
+        JOIN LIBRARY_BRANCH L ON C.BRANCH_ID = L.BRANCH_ID;
+    `;
+    await safeQuery(sql, [], req, res);
+});
+app.post('/api/book_copies', async (req, res) => {
+    const { noOfCopies, bookId, branchId } = req.body;
+    await safeQuery('INSERT INTO BOOK_COPIES (NO_OF_COPIES, BOOK_ID, BRANCH_ID) VALUES (?, ?, ?)', [noOfCopies, bookId, branchId], req, res);
+});
+app.delete('/api/book_copies/:bookId/:branchId', async (req, res) => {
+    const { bookId, branchId } = req.params;
+    await safeQuery('DELETE FROM BOOK_COPIES WHERE BOOK_ID = ? AND BRANCH_ID = ?', [bookId, branchId], req, res);
+});
+
+
+// --- 5. CARD ROUTES ---
+app.get('/api/cards', async (req, res) => {
+    await safeQuery('SELECT CARD_NO FROM CARD', [], req, res);
+});
+app.post('/api/cards', async (req, res) => {
+    const { cardNo } = req.body;
+    await safeQuery('INSERT INTO CARD (CARD_NO) VALUES (?)', [cardNo], req, res);
+});
+app.delete('/api/cards/:cardNo', async (req, res) => {
+    const { cardNo } = req.params;
+    await safeQuery('DELETE FROM CARD WHERE CARD_NO = ?', [cardNo], req, res);
+});
+
+
+// --- 6. LENDING ROUTES ---
+app.get('/api/lendings', async (req, res) => {
+    const sql = `
+        SELECT 
+            B.TITLE AS BookTitle, L.BRANCH_NAME AS BranchName, 
+            BL.CARD_NO, BL.DATE_OUT, BL.DUE_DATE
+        FROM BOOK_LENDING BL
+        JOIN BOOK B ON BL.BOOK_ID = B.BOOK_ID
+        JOIN LIBRARY_BRANCH L ON BL.BRANCH_ID = L.BRANCH_ID
+        ORDER BY BL.DATE_OUT DESC LIMIT 10;
+    `;
+    await safeQuery(sql, [], req, res);
+});
+app.post('/api/lendings', async (req, res) => {
+    const { dateOut, dueDate, bookId, branchId, cardNo } = req.body;
+    await safeQuery('INSERT INTO BOOK_LENDING (DATE_OUT, DUE_DATE, BOOK_ID, BRANCH_ID, CARD_NO) VALUES (?, ?, ?, ?, ?)', 
+        [dateOut, dueDate, bookId, branchId, cardNo], req, res);
+});
+
+
+// --- 7. DASHBOARD/STATS ROUTE ---
+app.get('/api/stats', async (req, res) => {
+    try {
+        const [bookCount] = await db.query('SELECT COUNT(*) AS count FROM BOOK');
+        const [branchCount] = await db.query('SELECT COUNT(*) AS count FROM LIBRARY_BRANCH');
+        const [cardCount] = await db.query('SELECT COUNT(*) AS count FROM CARD');
+
+        res.status(200).json({
+            totalBooks: bookCount[0].count,
+            totalBranches: branchCount[0].count,
+            totalCards: cardCount[0].count
+        });
+    } catch (err) {
+        console.error('Stats Query Error:', err.message);
+        res.status(500).json({ error: 'Failed to fetch statistics.' });
+    }
+});
+
+
+// START SERVER
+app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+});</textarea>
+</div>
+
+<script>
+    const codeDisplay = document.getElementById('code-display');
+    const copyButton = document.getElementById('copyButton');
+    const downloadButton = document.getElementById('downloadButton');
+
+    // **1. Copy Code Functionality**
+    copyButton.addEventListener('click', () => {
+        // Select the content of the textarea
+        codeDisplay.select(); 
+        codeDisplay.setSelectionRange(0, 99999); // For mobile devices
+
+        // Use the modern Clipboard API (preferred)
+        navigator.clipboard.writeText(codeDisplay.value).then(() => {
+            copyButton.textContent = '✅ Copied!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+            copyButton.textContent = '❌ Failed!';
+            setTimeout(() => {
+                copyButton.textContent = '📋 Copy Code';
+            }, 2000);
+        });
+    });
+
+    // **2. Download JS Functionality**
+    downloadButton.addEventListener('click', () => {
+        // Get the code content from the textarea's value
+        const codeContent = codeDisplay.value;
+        
+        // Create a Blob from the content with the JavaScript file type
+        const blob = new Blob([codeContent], { type: 'application/javascript' });
+        
+        // Create a temporary link element
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        
+        // Set the link attributes for download
+        a.href = url;
+        a.download = 'server.js'; // Suggested filename for the user
+        
+        // Programmatically click the link to trigger the download
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up the temporary link and object URL
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        downloadButton.textContent = '⬇️ Downloading...';
+        setTimeout(() => {
+            downloadButton.textContent = '⬇️ Download server.js';
+        }, 2000);
+    });
+</script>
+
+</body>
+</html>
